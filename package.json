@@ -1,0 +1,18 @@
+﻿{
+  "name": "lembretes-noc",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Aplicacao web estatica de lembretes com Service Worker",
+  "scripts": {
+    "dev": "http-server . -p 8765 -a 127.0.0.1 -c-1 -o /index.html",
+    "start": "npm run dev",
+    "serve": "http-server . -p 8765 -a 127.0.0.1 -c-1",
+    "dev:alt": "python -m http.server 8765 --bind 127.0.0.1"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

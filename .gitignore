@@ -1,0 +1,20 @@
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS / Editor
+Thumbs.db
+.DS_Store
+
+# Temporary files
+*.tmp
+*.temp
+
+# Local artifacts
+*.pid
+
+# Windows placeholder files
+Novo(a) Documento de Texto.txt
+**/Novo(a) Documento de Texto.txt

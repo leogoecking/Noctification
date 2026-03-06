@@ -284,6 +284,16 @@ input,select{
   padding: 10px 12px;
   border-radius: 12px;
 }
+textarea{
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--card) 90%, transparent);
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 12px;
+  resize: vertical;
+  min-height: 120px;
+  font-family: var(--font);
+}
 input::placeholder{ color: color-mix(in srgb, var(--muted) 70%, transparent); }
 
 .btn{
@@ -466,4 +476,63 @@ input::placeholder{ color: color-mix(in srgb, var(--muted) 70%, transparent); }
 }
 @keyframes shimmer{
   to{ transform: translateX(100%); }
+}
+
+.notif-wrap{
+  position: relative;
+}
+.notif-bell{
+  position: relative;
+}
+.notif-count{
+  position: absolute;
+  top: -7px;
+  right: -6px;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: #ef4444;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 0 6px;
+}
+.notif-dropdown{
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  width: min(420px, 90vw);
+  max-height: 460px;
+  overflow: auto;
+  border: 1px solid var(--border);
+  background: var(--card);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  padding: 10px;
+  z-index: 90;
+}
+.notif-dropdown-head{
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+body.guest-mode .app-shell{
+  grid-template-columns: 1fr;
+}
+body.guest-mode .sidebar{
+  display: none;
+}
+body.guest-mode .content{
+  padding-top: 32px;
+}
+.auth-card{
+  max-width: 680px;
+  margin: 0 auto;
 }

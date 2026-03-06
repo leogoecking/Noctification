@@ -1,3 +1,5 @@
+import { escapeHtml } from "../js/utils.js";
+
 export function renderDetalhe({ params }) {
   const id = params.get("id") || "";
   return `
@@ -5,7 +7,7 @@ export function renderDetalhe({ params }) {
       <div class="card-head">
         <div>
           <div class="card-title">Detalhe do lembrete</div>
-          <div class="card-sub">ID: ${id ? `<code>${id}</code>` : "—"}</div>
+          <div class="card-sub">ID: ${id ? `<code>${escapeHtml(id)}</code>` : "—"}</div>
         </div>
         <div class="row end">
           <a class="btn btn-secondary" href="#/lista">Voltar</a>

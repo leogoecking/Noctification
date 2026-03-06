@@ -1,0 +1,68 @@
+- id: BUG-DATA-001
+  severity: high
+  category: data_integrity
+  component: frontend-api-client
+  files:
+    - js/api.js
+  root_cause: Precedencia incorreta no fallback de randomUUID para id de log.
+  impact: Colisoes e sobrescrita de logs.
+  reproduction: Id podia virar l_undefined em ambientes sem crypto.randomUUID.
+  fix: Fallback seguro encapsulado.
+  verification: tests/frontend/api.log-id.test.js
+  status: fixed
+
+- id: BUG-SEC-001
+  severity: high
+  category: security_xss
+  component: router-view-rendering
+  files:
+    - views/detalhe.js
+  root_cause: Parametro de rota interpolado sem escape.
+  impact: Execucao de payload HTML/JS no cliente.
+  reproduction: "#/detalhe?id=<img src=x onerror=alert(1)>"
+  fix: Escape HTML com utilitario comum.
+  verification: tests/frontend/detalhe.xss.test.js
+  status: fixed
+
+- id: BUG-FUNC-001
+  severity: low
+  category: functional_ui
+  component: shell_html
+  files:
+    - index.html
+  root_cause: Path de favicon incorreto.
+  impact: Asset nao carregado.
+  reproduction: href antigo apontava para arquivo inexistente.
+  fix: Caminho corrigido para ./favicon.jpeg.
+  verification: Validacao estatica e teste manual.
+  status: fixed
+
+- id: SCALE-API-001
+  severity: high
+  category: architecture_scalability
+  component: backend_api
+  files:
+    - api/src/app.js
+    - api/src/db.js
+    - api/src/server.js
+  root_cause: Persistencia local-only em IndexedDB.
+  impact: Sem multiusuario centralizado.
+  fix: API Node + SQLite + auth + scheduler + endpoints v1.
+  verification: tests/api/api.integration.test.js
+  status: fixed
+
+- id: SCALE-DEPLOY-001
+  severity: medium
+  category: operational
+  component: deployment
+  files:
+    - docker-compose.yml
+    - api/Dockerfile
+    - gateway/Dockerfile
+    - gateway/nginx.conf
+    - .env.example
+  root_cause: Ausencia de padrao de deploy em VM.
+  impact: Operacao manual e sem padrao.
+  fix: Compose com gateway, api, healthcheck e volume persistente.
+  verification: Smoke test previsto em compose.
+  status: fixed

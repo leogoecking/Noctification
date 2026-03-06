@@ -1,0 +1,105 @@
+generated_at: "2026-03-06T00:20:00-03:00"
+repository: "c:/Users/leogo/OneDrive/Documentos/app"
+branch: "main"
+summary:
+  total_findings: 4
+  fixed: 3
+  open: 1
+  tests:
+    command: "npm test"
+    status: "passed"
+    files_passed: 4
+    tests_passed: 9
+  dependency_audit:
+    command: "npm audit --json"
+    status: "passed"
+    vulnerabilities:
+      critical: 0
+      high: 0
+      moderate: 0
+      low: 0
+      total: 0
+findings:
+  - bug_id: "BUG-INT-001"
+    severity: "high"
+    category: "integration"
+    complexity: "low"
+    priority: "P1"
+    status: "fixed"
+    component: "gateway/frontend-runtime"
+    files:
+      - "gateway/nginx.conf"
+    current_behavior: "Frontend stale cached assets could be served, causing old UI/runtime paths and API mismatch behavior."
+    expected_behavior: "Frontend should always serve the current deployed build for HTML/JS/CSS in this environment."
+    root_cause: "No explicit no-cache policy for critical frontend assets in gateway configuration."
+    impact: "Users saw frontend loaded but API workflows not functioning consistently."
+    reproduction:
+      - "Load app after deployment where browser keeps old cache."
+      - "Observe UI/version mismatch and broken auth/API behavior."
+    verification:
+      - "HTTP headers include Cache-Control no-store for / and /js/*.js."
+      - "Gateway served files contain new auth notification code."
+      - "User login/API through :8080 succeeds."
+    fix_summary: "Added no-store/no-cache headers for html/js/css location block and rebuilt gateway image."
+
+  - bug_id: "BUG-SEC-001"
+    severity: "high"
+    category: "security"
+    complexity: "low"
+    priority: "P1"
+    status: "fixed"
+    component: "runtime-configuration"
+    files:
+      - ".env"
+    current_behavior: "JWT secret was weak placeholder value (change-me-please) in active runtime."
+    expected_behavior: "JWT secret must be strong/unpredictable in runtime."
+    root_cause: "Default/placeholder secret not rotated in active environment."
+    impact: "Token signing secret predictability risk."
+    reproduction:
+      - "Run docker compose config and inspect JWT_SECRET."
+      - "Observe placeholder secret in runtime before fix."
+    verification:
+      - "JWT_SECRET rotated to 48-char random value in .env."
+      - "API container restarted and login validated post-change."
+    fix_summary: "Replaced JWT_SECRET in .env with strong random value and restarted API container."
+
+  - bug_id: "BUG-DOC-001"
+    severity: "medium"
+    category: "documentation"
+    complexity: "low"
+    priority: "P2"
+    status: "fixed"
+    component: "project-docs"
+    files:
+      - "README.md"
+    current_behavior: "README did not fully reflect implemented auth/register/admin notification websocket flows."
+    expected_behavior: "Operational docs should match deployed behavior and endpoints."
+    root_cause: "Feature evolution outpaced documentation updates."
+    impact: "Operational confusion and incorrect run/debug procedures."
+    reproduction:
+      - "Compare README flow vs current routes/endpoints and UI."
+      - "Observe mismatch in auth and notification capabilities."
+    verification:
+      - "README updated with current architecture, endpoints, and runtime flow."
+    fix_summary: "Rewrote README to include Docker flow, auth pages, admin panel and notification APIs/ws."
+
+  - bug_id: "BUG-SEC-002"
+    severity: "high"
+    category: "security"
+    complexity: "medium"
+    priority: "P1"
+    status: "open_accepted_risk"
+    component: "credentials-policy"
+    files:
+      - ".env"
+      - "api/src/config.js"
+    current_behavior: "Admin default credentials remain admin/admin by configuration in active environment."
+    expected_behavior: "Production credentials should be unique and rotated."
+    root_cause: "Business requirement requests fixed admin/admin seed for administrative access."
+    impact: "Credential stuffing and unauthorized admin access risk if exposed."
+    reproduction:
+      - "Attempt login with admin/admin on current runtime."
+      - "Observe successful admin authentication."
+    verification:
+      - "Risk confirmed via runtime config and successful login test."
+    fix_summary: "Not changed due explicit requirement. Mitigation recommended: override ADMIN_PASSWORD per environment outside demo/dev scope."

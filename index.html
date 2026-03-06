@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="pt-BR" data-theme="light">
 <head>
   <meta charset="utf-8" />
@@ -6,10 +6,10 @@
   <meta name="color-scheme" content="light dark" />
   <title>Lembretes NOC</title>
   <link rel="stylesheet" href="./assets/styles.css" />
-  <link rel="shortcut icon" href="./app/favicon.jpeg" />
+  <link rel="shortcut icon" href="./favicon.jpeg" />
 </head>
 <body>
-  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <a class="skip-link" href="#main">Pular para o conteudo</a>
 
   <div class="app-shell">
     <header class="topbar" role="banner">
@@ -22,18 +22,35 @@
           <span class="brand-dot" aria-hidden="true"></span>
           <div>
             <div class="brand-name">Lembretes NOC</div>
-            <div id="nextInfo" class="brand-sub">Próximo alerta: —</div>
+            <div id="nextInfo" class="brand-sub">Proximo alerta: -</div>
           </div>
         </div>
       </div>
 
       <div class="topbar-actions">
         <div id="status" class="status-pill" aria-live="polite">
-          Notificação: — • Som: — • Alarme: —
+          Notificacao: - • Som: - • Alarme: -
         </div>
 
+        <div id="notifBellWrap" class="notif-wrap hidden">
+          <button id="notifBellBtn" class="icon-btn notif-bell" type="button" aria-label="Abrir notificacoes" aria-expanded="false">
+            🔔
+            <span id="notifBellCount" class="notif-count hidden">0</span>
+          </button>
+          <div id="notifDropdown" class="notif-dropdown hidden" role="menu" aria-label="Ultimas notificacoes">
+            <div class="notif-dropdown-head">
+              <span>Ultimas notificacoes</span>
+              <a id="notifViewAllLink" href="#/notifications" class="btn btn-ghost">Ver todas</a>
+            </div>
+            <div id="notifDropdownEmpty" class="empty">Sem notificacoes.</div>
+            <ul id="notifDropdownList" class="list hidden"></ul>
+          </div>
+        </div>
+
+        <div id="userInfo" class="status-pill hidden">-</div>
+
         <button id="enableNotifBtn" class="btn btn-secondary" type="button">
-          Ativar notificações
+          Ativar notificacoes
         </button>
 
         <button id="testSoundBtn" class="btn btn-secondary" type="button">
@@ -44,23 +61,29 @@
           Parar alarme
         </button>
 
+        <button id="logoutBtn" class="btn btn-secondary hidden" type="button">
+          Sair
+        </button>
+
         <button id="themeToggleBtn" class="btn btn-ghost" type="button">
           🌙 Modo escuro
         </button>
       </div>
     </header>
 
-    <aside id="sidebar" class="sidebar" aria-label="Navegação">
+    <aside id="sidebar" class="sidebar" aria-label="Navegacao">
       <nav class="nav">
         <a class="nav-link" href="#/dashboard" data-nav="dashboard">Dashboard</a>
         <a class="nav-link" href="#/lista" data-nav="lista">Lista</a>
+        <a class="nav-link" href="#/notifications" data-nav="notifications">Notificacoes</a>
         <a class="nav-link" href="#/settings" data-nav="settings">Settings</a>
+        <a id="navAdminLink" class="nav-link hidden" href="#/admin" data-nav="admin">Admin</a>
       </nav>
 
       <div class="sidebar-foot">
         <div class="mini">
           <div class="mini-title">Dica</div>
-          <div class="mini-text">Ative notificações e teste o som uma vez.</div>
+          <div class="mini-text">Ative notificacoes e teste o som uma vez.</div>
         </div>
       </div>
     </aside>
@@ -72,17 +95,14 @@
     </main>
   </div>
 
-  <!-- Toast -->
   <div id="msg" class="toast hidden" role="status" aria-live="polite"></div>
 
-  <!-- Hidden file input -->
   <input id="fileInput" type="file" accept="application/json" class="hidden" />
 
-  <!-- Modal -->
   <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-card">
       <div class="modal-head">
-        <div id="modalTitle" class="modal-title">—</div>
+        <div id="modalTitle" class="modal-title">-</div>
         <button id="modalCloseBtn" class="icon-btn" type="button" aria-label="Fechar modal">✕</button>
       </div>
       <div id="modalBody" class="modal-body"></div>
@@ -95,7 +115,7 @@
       </div>
 
       <div class="modal-foot">
-        <div class="hint">ESC ou clique fora para fechar (crítico exige ACK ou Concluir).</div>
+        <div class="hint">ESC ou clique fora para fechar (critico exige ACK ou Concluir).</div>
       </div>
     </div>
   </div>

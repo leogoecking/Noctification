@@ -1,0 +1,67 @@
+[
+  {
+    "id": "BUG-DATA-001",
+    "severity": "high",
+    "category": "data_integrity",
+    "component": "frontend-api-client",
+    "files": ["js/api.js"],
+    "root_cause": "Precedencia incorreta no fallback de crypto.randomUUID em id de log.",
+    "impact": "Risco de colisoes e sobrescrita de logs.",
+    "reproduction": "Expressao retornava l_undefined quando randomUUID nao existia.",
+    "fix": "Geracao de id encapsulada com fallback seguro.",
+    "verification": "Teste automatizado tests/frontend/api.log-id.test.js",
+    "status": "fixed"
+  },
+  {
+    "id": "BUG-SEC-001",
+    "severity": "high",
+    "category": "security_xss",
+    "component": "router-view-rendering",
+    "files": ["views/detalhe.js"],
+    "root_cause": "Parametro id interpolado sem escape HTML.",
+    "impact": "Execucao de payload no contexto da pagina.",
+    "reproduction": "#/detalhe?id=<img src=x onerror=alert(1)>",
+    "fix": "Escape de HTML com utilitario padronizado.",
+    "verification": "Teste automatizado tests/frontend/detalhe.xss.test.js",
+    "status": "fixed"
+  },
+  {
+    "id": "BUG-FUNC-001",
+    "severity": "low",
+    "category": "functional_ui",
+    "component": "shell_html",
+    "files": ["index.html"],
+    "root_cause": "Caminho incorreto do favicon.",
+    "impact": "Asset 404 no carregamento.",
+    "reproduction": "href apontava para ./app/favicon.jpeg inexistente.",
+    "fix": "Caminho ajustado para ./favicon.jpeg.",
+    "verification": "Validacao estatica do path e teste manual de carregamento.",
+    "status": "fixed"
+  },
+  {
+    "id": "SCALE-API-001",
+    "severity": "high",
+    "category": "architecture_scalability",
+    "component": "backend_api",
+    "files": ["api/src/app.js", "api/src/db.js", "api/src/server.js"],
+    "root_cause": "Aplicacao anterior dependia exclusivamente de IndexedDB local.",
+    "impact": "Impossibilidade de operacao multiusuario centralizada.",
+    "reproduction": "Dados isolados por navegador/dispositivo.",
+    "fix": "API central com SQLite, auth, scheduler e contratos v1.",
+    "verification": "Teste de integracao tests/api/api.integration.test.js",
+    "status": "fixed"
+  },
+  {
+    "id": "SCALE-DEPLOY-001",
+    "severity": "medium",
+    "category": "operational",
+    "component": "deployment",
+    "files": ["docker-compose.yml", "api/Dockerfile", "gateway/Dockerfile", "gateway/nginx.conf", ".env.example"],
+    "root_cause": "Ausencia de topologia de deploy para VM.",
+    "impact": "Operacao manual e inconsistente em ambiente remoto.",
+    "reproduction": "Sem compose, sem proxy, sem volume persistente padrao.",
+    "fix": "Empacotamento Docker Compose com persistencia e healthcheck.",
+    "verification": "Validacao estrutural dos manifests e smoke previsto em compose.",
+    "status": "fixed"
+  }
+]

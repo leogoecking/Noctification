@@ -1,0 +1,6 @@
+id,severity,category,component,files,root_cause,impact,reproduction,fix,verification,status
+BUG-DATA-001,high,data_integrity,frontend-api-client,"js/api.js","Precedencia incorreta no fallback de randomUUID","Colisoes/sobrescrita de logs","Id podia virar l_undefined","Fallback seguro de id","tests/frontend/api.log-id.test.js",fixed
+BUG-SEC-001,high,security_xss,router-view-rendering,"views/detalhe.js","Interpolacao sem escape de parametro id","XSS no cliente","#/detalhe?id=<img src=x onerror=alert(1)>","Escape HTML no id","tests/frontend/detalhe.xss.test.js",fixed
+BUG-FUNC-001,low,functional_ui,shell_html,"index.html","Path de favicon incorreto","Asset 404","href antigo para ./app/favicon.jpeg","Path ajustado para ./favicon.jpeg","Validacao estatica/manual",fixed
+SCALE-API-001,high,architecture_scalability,backend_api,"api/src/app.js|api/src/db.js|api/src/server.js","Dependencia de IndexedDB local-only","Sem multiusuario centralizado","Dados isolados por navegador","API central com auth+scheduler","tests/api/api.integration.test.js",fixed
+SCALE-DEPLOY-001,medium,operational,deployment,"docker-compose.yml|api/Dockerfile|gateway/Dockerfile|gateway/nginx.conf|.env.example","Ausencia de padrao de deploy","Operacao manual em VM","Sem compose/proxy/volume","Compose com healthcheck e persistencia","Smoke compose",fixed

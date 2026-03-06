@@ -1,16 +1,30 @@
-﻿{
+{
   "name": "lembretes-noc",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
-  "description": "Aplicacao web estatica de lembretes com Service Worker",
+  "description": "Aplicacao de lembretes NOC com frontend web e API Node/SQLite",
   "scripts": {
     "dev": "http-server . -p 8765 -a 127.0.0.1 -c-1 -o /index.html",
     "start": "npm run dev",
     "serve": "http-server . -p 8765 -a 127.0.0.1 -c-1",
-    "dev:alt": "python -m http.server 8765 --bind 127.0.0.1"
+    "dev:alt": "python -m http.server 8765 --bind 127.0.0.1",
+    "api": "node api/src/server.js",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "better-sqlite3": "^11.10.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
-    "http-server": "^14.1.1"
+    "http-server": "^14.1.1",
+    "jsdom": "^26.1.0",
+    "supertest": "^7.1.1",
+    "vitest": "^4.0.18"
   },
   "engines": {
     "node": ">=18"

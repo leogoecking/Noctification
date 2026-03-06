@@ -15,11 +15,12 @@ export function initSidebar() {
 
     sidebar.classList.toggle("collapsed", !!collapsed);
     btn.setAttribute("aria-expanded", String(!collapsed));
-    localStorage.setItem(key, collapsed ? "1" : "0");
+    try { localStorage.setItem(key, collapsed ? "1" : "0"); } catch {}
   };
 
   // desktop persist
-  const saved = localStorage.getItem(key) === "1";
+  let saved = false;
+  try { saved = localStorage.getItem(key) === "1"; } catch {}
   if (!window.matchMedia("(max-width: 980px)").matches) apply(saved);
 
   btn.addEventListener("click", () => {
